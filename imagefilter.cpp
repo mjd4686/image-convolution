@@ -29,41 +29,67 @@ int main(int numargs, char* args[]){
   gb*2,gb*4,gb*2,
   gb*1,gb*2,gb*1);
 
-  if(numargs > 3){
+  if(numargs > 4){
     std::cout << "Too many arguments, aborting" << '\n';
     return 0;
   }
-  else if(numargs < 3){
+  else if(numargs < 4){
     std::cout << "Too few arguments, aborting" << '\n';
     return 0;
   }
   else{
     std::cout << "running convolution with: ";
     CImg<float> dispimg;
-    CImg<float> inputimg(args[2]);
-    char in = *args[1];
-    if(in == 's'){
+    CImg<float> filtputimg(args[3]);
+    char filt = *args[1];
+    char edge = *args[2];
+    if(filt == 's'){
       std::cout << "Sharpen" << '\n';
-      dispimg = filter(inputimg, sharpen);
+      if(edge == 'c'){
+        dispimg = filter(filtputimg, sharpen);
+      }
+      else{
+        dispimg = filterextend(filtputimg, sharpen);
+      }
     }
-    else if(in == 'e'){
+    else if(filt == 'e'){
       std::cout << "Emboss" << '\n';
-      dispimg = filter(inputimg, emboss);
+      if(edge == 'c'){
+        dispimg = filter(filtputimg, emboss);
+      }
+      else{
+        dispimg = filterextend(filtputimg, emboss);
+      };
     }
-    else if(in == 'g'){
+    else if(filt == 'g'){
       std::cout << "Gaussian Blur" << '\n';
-      dispimg = filter(inputimg, gaussianblur);
+      if(edge == 'c'){
+        dispimg = filter(filtputimg, gaussianblur);
+      }
+      else{
+        dispimg = filterextend(filtputimg, gaussianblur);
+      }
     }
-    else if(in == 'b'){
+    else if(filt == 'b'){
       std::cout << "Blur" << '\n';
-      dispimg = filter(inputimg, blur);
+      if(edge == 'c'){
+        dispimg = filter(filtputimg, blur);
+      }
+      else{
+        dispimg = filterextend(filtputimg, blur);
+      }
     }
-    else if(in == 'd'){
+    else if(filt == 'd'){
       std::cout << "Edge Detection" << '\n';
-      dispimg = filter(inputimg, edgedetect);
+      if(edge == 'c'){
+        dispimg = filter(filtputimg, edgedetect);
+      }
+      else{
+        dispimg = filterextend(filtputimg, edgedetect);
+      }
     }
     else{
-      std::cout << "Input for filter isn't recognized, aborting" << '\n';
+      std::cout << "input for filter isn't recognized, aborting" << '\n';
       return 0;
     }
     CImgDisplay display(dispimg, "displayed image");
