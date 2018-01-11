@@ -29,20 +29,22 @@ int main(int numargs, char* args[]){
   gb*2,gb*4,gb*2,
   gb*1,gb*2,gb*1);
 
-  if(numargs > 4){
+  if(numargs > 5){
     std::cout << "Too many arguments, aborting" << '\n';
     return 0;
   }
-  else if(numargs < 4){
+  else if(numargs < 5){
     std::cout << "Too few arguments, aborting" << '\n';
     return 0;
   }
   else{
     std::cout << "running convolution with: ";
     CImg<float> dispimg;
-    CImg<float> filtputimg(args[3]);
+    CImg<float> filtputimg(args[4]);
+    char filename = *args[4];
     char filt = *args[1];
     char edge = *args[2];
+    char file = *args[3];
     if(filt == 's'){
       std::cout << "Sharpen" << '\n';
       if(edge == 'c'){
@@ -91,6 +93,18 @@ int main(int numargs, char* args[]){
     else{
       std::cout << "input for filter isn't recognized, aborting" << '\n';
       return 0;
+    }
+    if(file == 'j'){
+      const char* temp = "filteredimage.jpg";
+      dispimg.save_jpeg(temp, 100);
+    }
+    else if(file == 'p'){
+      const char* temp = "filteredimage.png";
+      dispimg.save_png(temp, 24);
+    }
+    else if(file == 'b'){
+      const char* temp = "filteredimage.bmp";
+      dispimg.save_bmp(temp);
     }
     CImgDisplay display(dispimg, "displayed image");
     while(!display.is_closed()){
