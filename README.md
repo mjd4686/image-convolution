@@ -7,29 +7,45 @@ A compile command for the code is
 
 clang++ -std=c++11 imagefilter.cpp convolution.cpp -lX11 -lpthread -o runfilter
 
-It takes input in the format
-./runfilter f e j image.jpg
+It takes input in the format:
+```
+./runfilter F E J image.jpg
+```
 
-Where f is the filter you want to apply, the current ones are:
+Where **F** is the filter you want to apply, the current ones are:
+
 s - Sharpen
+
 b - Blur
+
 e - Emboss
+
 g - Gaussian Blur
+
 d - Edge Detection
 
-And e is how edges are handled, which currently are:
+And **E** is how edges are handled, which currently are:
+
 c - crop
+
 e - extend
 
-And j is the format the files could be outputted at, options currently are:
+And **J** is the format the files could be outputted at, options currently are:
+
 j - jpeg
+
 p - png
+
 b - bmp
-n - no file outputted
+
+n - no file output
 
 And image.jpg is the image you want to apply to the filter on.
 
 Features I may add in the future are:
+
 *option to handle edges through wrapping, extending, or mirroring (extending added)
+
 *allowing for manual filter inputs
+
 *options to save filtered images (done)
